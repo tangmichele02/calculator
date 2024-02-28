@@ -22,3 +22,20 @@ h1 {
   font-size: 70px;
   color: white;
 }
+
+.app {
+  display: flex;
+}
+
+.child1 {
+  flex: 1;
+}
+
+/* .child2 {
+  width: 360px;
+  height: 550px;
+  padding: 10px;
+  margin-left: 30px;
+  border-radius: 10px;
+  background-color: #b4437d;
+} */

@@ -14,11 +14,11 @@ button {
   }
   
   .equals {
-    grid-column: 3 / 5;
-    background-color: #967bb6;
+    grid-column: 4 / 5;
+    background-color: #a272db;
   }
-  
-  .equals:hover {
-    background-color: #967bb6;
+
+  .numbers {
+    background-color: #b66dad;
   }
   

@@ -4,15 +4,16 @@ import Wrapper from "./components/Wrapper";
 import Screen from "./components/Screen";
 import ButtonBox from "./components/ButtonBox";
 import Button from "./components/Button";
+import History from "./components/History";
 
 import "./index.css";
 
 const btnValues = [
-  ["C", "+-", "%", "/"],
+  ["C", "%", "^", "/"],
   [7, 8, 9, "X"],
   [4, 5, 6, "-"],
   [1, 2, 3, "+"],
-  [0, ".", "="],
+  [0, ".", "+-", "="],
 ];
 
 const toLocaleString = (num) =>
@@ -77,6 +78,8 @@ const App = () => {
           ? a - b 
           : sign === "X"
           ? a * b 
+          : sign === "^"
+          ? a ** b
           : a / b;
 
 
@@ -132,38 +135,50 @@ const App = () => {
 
   return (
     <div>
-      <h1>Calculator</h1>
-      <Wrapper>
-        <Screen value={calc.num ? calc.num : calc.res} />
-        <ButtonBox>
-          {
-            btnValues.flat().map((btn, i) => {
-              return (
-                <Button
-                  key={i}
-                  className={btn === "=" ? "equals" : ""}
-                  value={btn}
-                  onClick={
-                    btn === "C"
-                      ? resetClickHandler
-                      : btn === "+-"
-                      ? invertClickHandler
-                      : btn === "%"
-                      ? percentClickHandler
-                      : btn === "="
-                      ? equalsClickHandler
-                      : btn === "/" || btn === "X" || btn === "-" || btn === "+"
-                      ? signClickHandler
-                      : btn === "."
-                      ? commaClickHandler
-                      : numClickHandler
-                  }
-                />
-              );
-            })
-          }
-        </ButtonBox>
-      </Wrapper>
+    <h1>Calculator</h1>
+    <div class="app">
+      <div class="child1">
+        <Wrapper>
+          <Screen value={calc.num ? calc.num : calc.res} />
+          <ButtonBox>
+            {
+              btnValues.flat().map((btn, i) => {
+                return (
+                  <Button
+                    key={i}
+                    className={
+                      btn === "="
+                      ? "equals" 
+                      : btn === 0 || btn === 1 || btn === 2 || btn === 3 || btn === 4 || btn === 5 || btn === 6 || btn === 7 || btn === 8 || btn === 9 
+                      ? "numbers"
+                      : ""}
+                    value={btn}
+                    onClick={
+                      btn === "C"
+                        ? resetClickHandler
+                        : btn === "+-"
+                        ? invertClickHandler
+                        : btn === "%"
+                        ? percentClickHandler
+                        : btn === "="
+                        ? equalsClickHandler
+                        : btn === "/" || btn === "X" || btn === "-" || btn === "+" || btn === "^" || btn === "log"
+                        ? signClickHandler
+                        : btn === "."
+                        ? commaClickHandler
+                        : numClickHandler
+                    }
+                  />
+                );
+              })
+            }
+          </ButtonBox>
+        </Wrapper>
+      </div>
+      {/* <div class="child2">
+        <History></History>
+      </div> */}
+    </div>
     </div>
   );
 };
