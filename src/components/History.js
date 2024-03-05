@@ -1,7 +1,8 @@
 import './History.css';
 
-const History = ({ children }) => {
-    return <div className="history">Hello</div>;
+const History = (props) => {
+
+    return <div className="history">{props.history.map((result) => <h3 className="hist-item">{result}</h3>)}</div>;
 };
 
 export default History;

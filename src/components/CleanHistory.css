@@ -1,11 +1,11 @@
-.hist-item {
+.clear-history {
     font-size: 25px;
     color: white;
     text-align: center;
-    text-wrap: wrap;
+    font-weight: bold;
     border-width: 1px;
     border-radius: 5px;
     padding: 5px;
     margin: 5px;
-    background-color: #eb8ed52d;
+    background-color: #de2ab42d;
 }

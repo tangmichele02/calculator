@@ -5,6 +5,7 @@ import Screen from "./components/Screen";
 import ButtonBox from "./components/ButtonBox";
 import Button from "./components/Button";
 import History from "./components/History";
+import ClearHistory from "./components/ClearHistory";
 
 import "./index.css";
 
@@ -28,6 +29,10 @@ const App = () => {
     num: 0,
     res: 0,
   });
+
+  let [hist, setHist] = useState([]);
+
+  let [equation, setEquation] = useState("");
 
   const numClickHandler = (e) => {
     e.preventDefault();
@@ -55,6 +60,7 @@ const App = () => {
       ...calc, 
       num: !calc.num.toString().includes(".") ? calc.num + value : calc.num, 
     });
+
   };
 
   const signClickHandler = (e) => {
@@ -71,23 +77,31 @@ const App = () => {
 
   const equalsClickHandler = () => {
     if (calc.sign && calc.num) {
-      const math = (a, b, sign) => 
-        sign === "+"
-          ? a + b
-          : sign === "-"
-          ? a - b 
-          : sign === "X"
-          ? a * b 
-          : sign === "^"
-          ? a ** b
-          : a / b;
-
+      const math = (a, b, sign) => {
+        let output = 0;
+        if (sign === "+" ) {
+          output = a + b;
+        } else if (sign === "-") {
+          output = a - b;
+        } else if (sign === "X") {
+          output = a * b;
+        } else if (sign === "/") {
+          output = a / b;
+        }
+        const eq =  a + " " + sign + " " + b + " " + "=" + " " + output;
+        setHist(hist => [eq, ...hist]);
+        setEquation(eq);
+        
+        return output;
+      }
 
       setCalc({
         ...calc, 
         res: 
           calc.num === "0" && calc.sign === "/"
             ? "Can't divide with 0"
+            : calc.num === NaN
+            ? "Can't use NaN"
             : toLocaleString(
               math(
                 Number(removeSpaces(calc.res)),
@@ -97,7 +111,7 @@ const App = () => {
             ),
         sign: "",
         num: 0,
-      });    
+      });  
     }
   };
 
@@ -132,7 +146,19 @@ const App = () => {
     });
   };
 
+  const clearhistoryClickHandler = () => {
+    setHist([]);
+  };
+  
+  // const addToHistory = (new_exp, result) => {
+  //   this.setState({
+  //       history: [...this.state.history, {exp: new_exp, result: result}]
+  //   })
+  // }
 
+  // const clickHandler = (btn) => {
+
+  // }
   return (
     <div>
     <h1>Calculator</h1>
@@ -175,9 +201,10 @@ const App = () => {
           </ButtonBox>
         </Wrapper>
       </div>
-      {/* <div class="child2">
-        <History></History>
-      </div> */}
+      <div class="child2">
+        <ClearHistory onClick={clearhistoryClickHandler}/>
+        <History history={hist}/>
+      </div>
     </div>
     </div>
   );

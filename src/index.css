@@ -31,11 +31,20 @@ h1 {
   flex: 1;
 }
 
-/* .child2 {
-  width: 360px;
+.child2 {
+  width: 320px;
   height: 550px;
   padding: 10px;
-  margin-left: 30px;
+  margin-left: 10px;
   border-radius: 10px;
-  background-color: #b4437d;
-} */
+  background-color: #614051;
+}
+
+.app {
+  background-color: #614051;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 10px;
+}
