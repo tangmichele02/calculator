@@ -162,9 +162,9 @@ const App = () => {
 
       <div class="side">
         <h3 class="inspo">Inspiration</h3>
-        <div class="mathfact">
+        {/* <div class="mathfact">
           <MathFact/>
-        </div>
+        </div> */}
 
         <div class="randnum">
           <RandomNum/>
