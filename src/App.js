@@ -6,7 +6,7 @@ import ButtonBox from "./components/ButtonBox";
 import Button from "./components/Button";
 import History from "./components/History";
 import ClearHistory from "./components/ClearHistory";
-import MathFact from "./components/MathFact";
+// import MathFact from "./components/MathFact";
 import RandomNum from "./components/RandomNum";
 import RandomOp from "./components/RandomOp";
 
@@ -21,15 +21,13 @@ const btnValues = [
 ];
 
 const toLocaleString = (num) =>
-String(num).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, "$1 ");
+  String(num).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, "$1 ");
 
 const removeSpaces = (num) => num.toString().replace(/\s/g, "");
 
-
 const App = () => {
-
   let [calc, setCalc] = useState({
-    sign: "", 
+    sign: "",
     num: 0,
     res: 0,
   });
@@ -42,14 +40,14 @@ const App = () => {
 
     if (removeSpaces(calc.num).length < 9) {
       setCalc({
-        ...calc, 
-        num: 
+        ...calc,
+        num:
           calc.num === 0 && value === "0"
             ? "0"
             : removeSpaces(calc.num) % 1 === 0
-            ? toLocaleString(Number(removeSpaces(calc.num + value)))
-            : toLocaleString(calc.num + value), 
-          res: !calc.sign? 0 : calc.res,
+              ? toLocaleString(Number(removeSpaces(calc.num + value)))
+              : toLocaleString(calc.num + value),
+        res: !calc.sign ? 0 : calc.res,
       });
     }
   };
@@ -59,20 +57,19 @@ const App = () => {
     const value = e.target.innerHTML;
 
     setCalc({
-      ...calc, 
-      num: !calc.num.toString().includes(".") ? calc.num + value : calc.num, 
+      ...calc,
+      num: !calc.num.toString().includes(".") ? calc.num + value : calc.num,
     });
-
   };
 
   const signClickHandler = (e) => {
     e.preventDefault();
-    const value = e.target.innerHTML; 
+    const value = e.target.innerHTML;
 
     setCalc({
-      ...calc, 
-      sign: value, 
-      res: !calc.res && calc.num ? calc.num : calc.res, 
+      ...calc,
+      sign: value,
+      res: !calc.res && calc.num ? calc.num : calc.res,
       num: 0,
     });
   };
@@ -81,7 +78,7 @@ const App = () => {
     if (calc.sign && calc.num) {
       const math = (a, b, sign) => {
         let output = 0;
-        if (sign === "+" ) {
+        if (sign === "+") {
           output = a + b;
         } else if (sign === "-") {
           output = a - b;
@@ -92,39 +89,38 @@ const App = () => {
         } else if (sign === "^") {
           output = a ** b;
         }
-        let eq =  a + " " + sign + " " + b + " " + "=" + " " + output;
+        let eq = a + " " + sign + " " + b + " " + "=" + " " + output;
         if (output === 47) {
           eq = eq + " " + "Chirp chirp!";
         }
-        setHist(hist => [eq, ...hist]);
-        
+        setHist((hist) => [eq, ...hist]);
+
         return output;
-      }
+      };
 
       setCalc({
-        ...calc, 
-        res: 
+        ...calc,
+        res:
           calc.num === "0" && calc.sign === "/"
             ? "Can't divide with 0"
             : toLocaleString(
-              math(
-                Number(removeSpaces(calc.res)),
-                Number(removeSpaces(calc.num)), 
-                calc.sign
+                math(
+                  Number(removeSpaces(calc.res)),
+                  Number(removeSpaces(calc.num)),
+                  calc.sign,
+                ),
               ),
-            ),
         sign: "",
         num: 0,
-      });  
+      });
     }
   };
 
-
   const invertClickHandler = () => {
     setCalc({
-      ...calc, 
+      ...calc,
       num: calc.num ? toLocaleString(removeSpaces(calc.num) * -1) : 0,
-      res: calc.res ? toLocaleString(removeSpaces(calc.res) * -1) : 0, 
+      res: calc.res ? toLocaleString(removeSpaces(calc.res) * -1) : 0,
       sign: "",
     });
   };
@@ -132,7 +128,7 @@ const App = () => {
   const percentClickHandler = () => {
     let num = calc.num ? parseFloat(removeSpaces(calc.num)) : 0;
     let res = calc.res ? parseFloat(removeSpaces(calc.res)) : 0;
-  
+
     setCalc({
       ...calc,
       num: (num /= Math.pow(100, 1)),
@@ -153,73 +149,83 @@ const App = () => {
   const clearhistoryClickHandler = () => {
     setHist([]);
   };
-  
 
   return (
     <div>
-    <h1>Calculator</h1>
-    <div class="big-app">
-
-      <div class="side">
-        <h3 class="inspo">Inspiration</h3>
-        {/* <div class="mathfact">
+      <h1>Calculator</h1>
+      <div class="big-app">
+        <div class="side">
+          <h3 class="inspo">Inspiration</h3>
+          {/* <div class="mathfact">
           <MathFact/>
         </div> */}
 
-        <div class="randnum">
-          <RandomNum/>
+          <div class="randnum">
+            <RandomNum />
+          </div>
+
+          <div class="randop">
+            <RandomOp />
+          </div>
         </div>
 
-        <div class="randop">
-          <RandomOp/>
-        </div>
-      </div>
-
-      <div class="main">
-        <div class="child1">
-          <Wrapper>
-            <Screen value={calc.num ? calc.num : calc.res} />
-            <ButtonBox>
-              {
-                btnValues.flat().map((btn, i) => {
+        <div class="main">
+          <div class="child1">
+            <Wrapper>
+              <Screen value={calc.num ? calc.num : calc.res} />
+              <ButtonBox>
+                {btnValues.flat().map((btn, i) => {
                   return (
                     <Button
                       key={i}
                       className={
                         btn === "="
-                        ? "equals" 
-                        : btn === 0 || btn === 1 || btn === 2 || btn === 3 || btn === 4 || btn === 5 || btn === 6 || btn === 7 || btn === 8 || btn === 9 
-                        ? "numbers"
-                        : ""}
+                          ? "equals"
+                          : btn === 0 ||
+                              btn === 1 ||
+                              btn === 2 ||
+                              btn === 3 ||
+                              btn === 4 ||
+                              btn === 5 ||
+                              btn === 6 ||
+                              btn === 7 ||
+                              btn === 8 ||
+                              btn === 9
+                            ? "numbers"
+                            : ""
+                      }
                       value={btn}
                       onClick={
                         btn === "C"
                           ? resetClickHandler
                           : btn === "+-"
-                          ? invertClickHandler
-                          : btn === "%"
-                          ? percentClickHandler
-                          : btn === "="
-                          ? equalsClickHandler
-                          : btn === "/" || btn === "X" || btn === "-" || btn === "+" || btn === "^" || btn === "log"
-                          ? signClickHandler
-                          : btn === "."
-                          ? commaClickHandler
-                          : numClickHandler
+                            ? invertClickHandler
+                            : btn === "%"
+                              ? percentClickHandler
+                              : btn === "="
+                                ? equalsClickHandler
+                                : btn === "/" ||
+                                    btn === "X" ||
+                                    btn === "-" ||
+                                    btn === "+" ||
+                                    btn === "^" ||
+                                    btn === "log"
+                                  ? signClickHandler
+                                  : btn === "."
+                                    ? commaClickHandler
+                                    : numClickHandler
                       }
                     />
                   );
-                })
-              }
-            </ButtonBox>
-          </Wrapper>
+                })}
+              </ButtonBox>
+            </Wrapper>
+          </div>
+          <div class="child2">
+            <ClearHistory onClick={clearhistoryClickHandler} />
+            <History history={hist} />
+          </div>
         </div>
-        <div class="child2">
-          <ClearHistory onClick={clearhistoryClickHandler}/>
-          <History history={hist}/>
-        </div>
-      </div>
-
       </div>
     </div>
   );
