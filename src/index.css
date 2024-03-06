@@ -23,8 +23,32 @@ h1 {
   color: white;
 }
 
-.app {
+.side {
+  width: 200px;
+  margin-left: 40px;
+  padding-left: 100px;
+}
+
+button.side-button {
+  width: 200px;
+  height: 75px;
+  text-align: center;
+}
+
+.big-app{
   display: flex;
+}
+
+.main {
+  flex:1;
+  display: flex;
+  overflow: hidden;
+  background-color: #614051;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 10px;
 }
 
 .child1 {
@@ -33,18 +57,10 @@ h1 {
 
 .child2 {
   width: 320px;
-  height: 550px;
+  height: 540px;
   padding: 10px;
   margin-left: 10px;
   border-radius: 10px;
   background-color: #614051;
-}
-
-.app {
-  background-color: #614051;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-radius: 10px;
+  overflow: hidden;
 }

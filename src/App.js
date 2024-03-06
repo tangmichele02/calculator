@@ -6,6 +6,9 @@ import ButtonBox from "./components/ButtonBox";
 import Button from "./components/Button";
 import History from "./components/History";
 import ClearHistory from "./components/ClearHistory";
+import MathFact from "./components/MathFact";
+import RandomNum from "./components/RandomNum";
+import RandomOp from "./components/RandomOp";
 
 import "./index.css";
 
@@ -22,6 +25,7 @@ String(num).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, "$1 ");
 
 const removeSpaces = (num) => num.toString().replace(/\s/g, "");
 
+
 const App = () => {
 
   let [calc, setCalc] = useState({
@@ -31,8 +35,6 @@ const App = () => {
   });
 
   let [hist, setHist] = useState([]);
-
-  let [equation, setEquation] = useState("");
 
   const numClickHandler = (e) => {
     e.preventDefault();
@@ -87,10 +89,14 @@ const App = () => {
           output = a * b;
         } else if (sign === "/") {
           output = a / b;
+        } else if (sign === "^") {
+          output = a ** b;
         }
-        const eq =  a + " " + sign + " " + b + " " + "=" + " " + output;
+        let eq =  a + " " + sign + " " + b + " " + "=" + " " + output;
+        if (output === 47) {
+          eq = eq + " " + "Chirp chirp!";
+        }
         setHist(hist => [eq, ...hist]);
-        setEquation(eq);
         
         return output;
       }
@@ -100,8 +106,6 @@ const App = () => {
         res: 
           calc.num === "0" && calc.sign === "/"
             ? "Can't divide with 0"
-            : calc.num === NaN
-            ? "Can't use NaN"
             : toLocaleString(
               math(
                 Number(removeSpaces(calc.res)),
@@ -150,62 +154,71 @@ const App = () => {
     setHist([]);
   };
   
-  // const addToHistory = (new_exp, result) => {
-  //   this.setState({
-  //       history: [...this.state.history, {exp: new_exp, result: result}]
-  //   })
-  // }
 
-  // const clickHandler = (btn) => {
-
-  // }
   return (
     <div>
     <h1>Calculator</h1>
-    <div class="app">
-      <div class="child1">
-        <Wrapper>
-          <Screen value={calc.num ? calc.num : calc.res} />
-          <ButtonBox>
-            {
-              btnValues.flat().map((btn, i) => {
-                return (
-                  <Button
-                    key={i}
-                    className={
-                      btn === "="
-                      ? "equals" 
-                      : btn === 0 || btn === 1 || btn === 2 || btn === 3 || btn === 4 || btn === 5 || btn === 6 || btn === 7 || btn === 8 || btn === 9 
-                      ? "numbers"
-                      : ""}
-                    value={btn}
-                    onClick={
-                      btn === "C"
-                        ? resetClickHandler
-                        : btn === "+-"
-                        ? invertClickHandler
-                        : btn === "%"
-                        ? percentClickHandler
-                        : btn === "="
-                        ? equalsClickHandler
-                        : btn === "/" || btn === "X" || btn === "-" || btn === "+" || btn === "^" || btn === "log"
-                        ? signClickHandler
-                        : btn === "."
-                        ? commaClickHandler
-                        : numClickHandler
-                    }
-                  />
-                );
-              })
-            }
-          </ButtonBox>
-        </Wrapper>
+    <div class="big-app">
+
+      <div class="main">
+        <div class="child1">
+          <Wrapper>
+            <Screen value={calc.num ? calc.num : calc.res} />
+            <ButtonBox>
+              {
+                btnValues.flat().map((btn, i) => {
+                  return (
+                    <Button
+                      key={i}
+                      className={
+                        btn === "="
+                        ? "equals" 
+                        : btn === 0 || btn === 1 || btn === 2 || btn === 3 || btn === 4 || btn === 5 || btn === 6 || btn === 7 || btn === 8 || btn === 9 
+                        ? "numbers"
+                        : ""}
+                      value={btn}
+                      onClick={
+                        btn === "C"
+                          ? resetClickHandler
+                          : btn === "+-"
+                          ? invertClickHandler
+                          : btn === "%"
+                          ? percentClickHandler
+                          : btn === "="
+                          ? equalsClickHandler
+                          : btn === "/" || btn === "X" || btn === "-" || btn === "+" || btn === "^" || btn === "log"
+                          ? signClickHandler
+                          : btn === "."
+                          ? commaClickHandler
+                          : numClickHandler
+                      }
+                    />
+                  );
+                })
+              }
+            </ButtonBox>
+          </Wrapper>
+        </div>
+        <div class="child2">
+          <ClearHistory onClick={clearhistoryClickHandler}/>
+          <History history={hist}/>
+        </div>
       </div>
-      <div class="child2">
-        <ClearHistory onClick={clearhistoryClickHandler}/>
-        <History history={hist}/>
+
+      <div class="side">
+        <div class="mathfact">
+          <MathFact/>
+        </div>
+
+        <div class="randnum">
+          <RandomNum/>
+        </div>
+
+        <div class="randop">
+          <RandomOp/>
+        </div>
       </div>
-    </div>
+      </div>
     </div>
   );
 };
