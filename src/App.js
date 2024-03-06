@@ -160,6 +160,21 @@ const App = () => {
     <h1>Calculator</h1>
     <div class="big-app">
 
+      <div class="side">
+        <h3 class="inspo">Inspiration</h3>
+        <div class="mathfact">
+          <MathFact/>
+        </div>
+
+        <div class="randnum">
+          <RandomNum/>
+        </div>
+
+        <div class="randop">
+          <RandomOp/>
+        </div>
+      </div>
+
       <div class="main">
         <div class="child1">
           <Wrapper>
@@ -205,19 +220,6 @@ const App = () => {
         </div>
       </div>
 
-      <div class="side">
-        <div class="mathfact">
-          <MathFact/>
-        </div>
-
-        <div class="randnum">
-          <RandomNum/>
-        </div>
-
-        <div class="randop">
-          <RandomOp/>
-        </div>
-      </div>
       </div>
     </div>
   );

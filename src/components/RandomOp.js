@@ -21,7 +21,7 @@ function RandomOp(props) {
     return (
         <div>
             <button class="side-button" onClick={handleClick}>
-                Random Number
+                Random Operation
             </button> 
             <div
                 style={{ visibility: randshow ? "visible" : "hidden" }}

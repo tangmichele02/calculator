@@ -23,16 +23,30 @@ h1 {
   color: white;
 }
 
+h3.inspo {
+  text-align: center;
+  margin-top: 10px;
+  padding-bottom: 5px;
+  font-size: 30px;
+  color: white;
+}
+
 .side {
   width: 200px;
-  margin-left: 40px;
-  padding-left: 100px;
+  margin-right: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-color: #bf6d985d;
+  border-radius: 10px;
 }
 
 button.side-button {
   width: 200px;
   height: 75px;
   text-align: center;
+  background-color: #7b204f5d;
 }
 
 .big-app{
